@@ -5,6 +5,7 @@
  * Last editted by: Josh Sutton
  * Last edited:  February 9, 2022
  * 
+ * Description: controls the slingshot mechanics
  ***/
 using System.Collections;
 using System.Collections.Generic;
@@ -54,8 +55,9 @@ public class Slingshot : MonoBehaviour
 
         projectile = Instantiate(prefabProjectile);
         projectile.transform.position = launchPos;
-        projectile.GetComponent<Rigidbody>().isKinematic = true;
-        projectileRB = projectile.GetComponent<Rigidbody>();
+        projectileRB = projectile.GetComponent<Rigidbody>(); 
+        projectileRB.isKinematic = true;
+        
     }//end OnMouseDown()
 
 
@@ -74,7 +76,7 @@ public class Slingshot : MonoBehaviour
         //Gets the current mouse position in 2D screen coordinates
         Vector3 mousePos2D = Input.mousePosition;
         mousePos2D.z = -Camera.main.transform.position.z;
-        Vector3 mousePos3D = Camera.main.ScreenToViewportPoint(mousePos2D);
+        Vector3 mousePos3D = Camera.main.ScreenToWorldPoint(mousePos2D);
         //Finds the delta from the launchPos to mousePos3D
         Vector3 mouseDelta = mousePos3D - launchPos;
         //Limit mouseDelta to the radius of the Slingshot SphereCollider
