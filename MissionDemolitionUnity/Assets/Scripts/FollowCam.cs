@@ -3,7 +3,7 @@
  * Date created: February 9, 2022
  * 
  * Last editted by: Josh Sutton
- * Last edited:  February 14, 2022
+ * Last edited:  February 16, 2022
  * 
  * Description: Controls the camera movement and projectile tracking
  ***/
@@ -34,8 +34,27 @@ public class FollowCam : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (POI == null) return;
-        Vector3 destination = POI.transform.position;
+        Vector3 destination;
+        if (POI == null)
+        {
+            destination = Vector3.zero;
+            destination.z = camZ;
+            transform.position = destination;
+        }
+        else
+        {
+            destination = POI.transform.position;
+        }
+
+        if(POI.tag == "Projectile")
+        {
+            if (POI.GetComponent<Rigidbody>().IsSleeping())
+            {
+                POI = null;
+                return;
+            }
+        }
+
 
         //Limit the X and Y to minimum values
         destination.x = Mathf.Max(minXY.x, destination.x);
@@ -51,15 +70,4 @@ public class FollowCam : MonoBehaviour
 
     }//end FixedUpdate()
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }//end Start()
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }//end Update()
 }
