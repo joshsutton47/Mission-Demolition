@@ -56,16 +56,16 @@ public class CloudCrafter : MonoBehaviour
     }//end Awake()
 
     // Update is called once per frame
-    void Update()
+   void Update()
     {
         foreach(GameObject cloud in cloudInstances)
         {
             float scaleVal = cloud.transform.localScale.x;
             Vector3 cPos = cloud.transform.position;
-
+            //Move larger clouds faster
             cPos.x -= scaleVal * Time.deltaTime * cloudSpeedMultiplier;
 
-            if(cPos.x <= cloudPosMax.x)
+            if(cPos.x <= cloudPosMin.x)
             {
                 cPos.x = cloudPosMax.x;
             }
